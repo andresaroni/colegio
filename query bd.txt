@@ -1,0 +1,33 @@
+CREATE TABLE estudiantes(
+	id_estudiante int AUTO_INCREMENT PRIMARY KEY,
+    cedula varchar(10) UNIQUE not null,
+    nombres varchar(100) not null,
+    telefono varchar(10),
+    fecha_nacimiento date not null
+);
+
+CREATE TABLE maestros(
+	id_maestro int AUTO_INCREMENT PRIMARY KEY,
+    cedula varchar(10) unique not null,
+    nombres varchar(100) not null,
+    telefono varchar(10),
+    email varchar(40) not null,
+    especialidad varchar(60) not null
+);
+
+CREATE TABLE cursos(
+	id_curso int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar(40) not null,
+    descripcion text,
+    maestro_id int not null,
+    FOREIGN KEY (maestro_id) REFERENCES maestros (id_maestro)
+);
+
+CREATE TABLE inscripciones(
+    id_inscripcion int AUTO_INCREMENT PRIMARY KEY,
+    estudiante_id int not null,
+    curso_id int not null,
+    fecha_inscripcion date not null,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes (id_estudiante),
+    FOREIGN KEY (curso_id) REFERENCES cursos (id_curso)
+);

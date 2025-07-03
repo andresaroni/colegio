@@ -5,12 +5,14 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-        $nombresDocente = trim($_POST['nombres']);
-        $apellidosDocente = trim($_POST['apellidos']);
+        $cedula = $_POST['cedula'];
+        $nombres = trim($_POST['nombres']);
+        $telefono = $_POST['telefono'];
+        $email = $_POST['email'];
         $especialidad = trim($_POST['especialidad']);
 
-        $createDocente = $conexion -> prepare("INSERT INTO docentes (nombres, apellidos, especialidad) VALUES (?,?,?)");
-        $createDocente ->   bind_param("sss", $nombresDocente, $apellidosDocente, $especialidad);
+        $createDocente = $conexion -> prepare("INSERT INTO maestros (cedula, nombres, telefono, email, especialidad) VALUES (?,?,?,?,?)");
+        $createDocente ->   bind_param("sssss", $cedula, $nombres, $telefono, $email, $especialidad);
 
         if ($createDocente -> execute()){
             $_SESSION['mensaje'] = "¡Docente Registrado con Éxito!";
@@ -20,7 +22,7 @@
 
         $createDocente -> close();
         $conexion -> close();
-        header('Location: ../../../RegistroDocente.php');
+        header('Location: ../../../index.php');
         exit;
     }
 

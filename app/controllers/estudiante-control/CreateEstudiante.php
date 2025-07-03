@@ -5,14 +5,13 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-        $cedula = trim($_POST['cedula']);
-        $nombresEstudiante = trim($_POST['nombres']);
-        $apellidosEstudiante = trim($_POST['apellidos']);
+        $cedula = $_POST['cedula'];
+        $nombres = trim($_POST['nombres']);
+        $telefono = trim($_POST['telefono']);
         $fechaNacimiento = $_POST['fecha-nacimiento'];
-        $grado = trim($_POST['grado']);
 
-        $createEstudiante = $conexion -> prepare("INSERT INTO estudiantes (cedula, nombres, apellidos, fechaNacimiento, grado) VALUES (?,?,?,?,?)");
-        $createEstudiante ->   bind_param("sssss", $cedula, $nombresEstudiante, $apellidosEstudiante, $fechaNacimiento, $grado);
+        $createEstudiante = $conexion -> prepare("INSERT INTO estudiantes (cedula, nombres, telefono, fecha_nacimiento) VALUES (?,?,?,?)");
+        $createEstudiante ->   bind_param("ssss", $cedula, $nombres, $telefono, $fechaNacimiento);
 
         if ($createEstudiante -> execute()){
             $_SESSION['mensaje'] = "¡Estudiante Registrado con Éxito!";
@@ -22,7 +21,7 @@
 
         $createEstudiante -> close();
         $conexion -> close();
-        header('Location: ../../../RegistroEstudiante.php');
+        header('Location: ../../../index.php');
         exit;
     }
 
